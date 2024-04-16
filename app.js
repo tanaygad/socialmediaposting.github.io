@@ -1,353 +1,151 @@
-// window.onload = function () {
-
-// };
-
-// Wait for the DOM to be ready
-document.addEventListener('DOMContentLoaded', function () {
-    // Get all elements with the class 'toggle-email'
-    var toggleButtons = document.querySelectorAll('.toggle-email');
-
-    // Loop through each button
-    toggleButtons.forEach(function (button) {
-        // Add a click event listener to each button
-        button.addEventListener('click', function () {
-            // Get the sibling email element
-            var emailElement = this.nextElementSibling;
-
-            // Toggle the 'visible' class on the email element
-            emailElement.classList.toggle('visible');
-        });
-    });
-});
-
-
-function toggleMenu() {
-    var navbar = document.getElementById("navbar");
-    if (navbar.style.left === '0px') {
-        navbar.style.left = '-250px'; // Hide
-    } else {
-        navbar.style.left = '0px'; // Show
-    }
-}
-
-var imageUrl1;
-var imageUrl2;
-var imageUrl3;
-var url1;
-var url2;
-var url3;
-var description1;
-var description2;
-var description3;
-
-document.addEventListener('DOMContentLoaded', function () {
-    console.log("heelo");
-
-    fetch('https://flask-heroku-server-3.onrender.com/get-image-url')
-        .then(response => {
-            console.log('Response:', response);
-            var loader = document.getElementById('loader-wrapper');
-            loader.style.display = 'none'; // Hide the loader once everything is loaded
-            return response.json();
-        })
-        .then(data => {
-            console.log(data)
-            //imageUrl = "https://clubartizen.com/wp-content/uploads/2023/07/Toran-upcycled-300x300.jpg"
-            imageUrl1 = data.image_url1
-            description1 = data.description1;   // product 
-            imageUrl2 = data.image_url2
-            description2 = data.description2;   // craft
-            imageUrl3 = data.image_url3
-            description3 = data.description3;   // blog
-            const button1 = document.getElementById('products');
-            const button2 = document.getElementById('craft-stories');
-            const button3 = document.getElementById('blogs');
-            const isButton1Active = button1.classList.contains('active');
-            // const isButton2Active = button2.classList.contains('active');
-            // const isButton3Active = button3.classList.contains('active');
-
-            // if (isButton2Active) {
-            //     document.getElementById('previewImage').src = imageUrl2;
-            //     const textContainer = document.getElementById('textContainer');
-            //     textContainer.textContent = description2;
-            // }
-
-
-            if (isButton1Active) {
-                document.getElementById('previewImage').src = imageUrl1;
-                const textContainer = document.getElementById('textContainer');
-                textContainer.textContent = description1;
-            }
-
-
-
-            // if (isButton3Active) {
-            //     document.getElementById('previewImage').src = imageUrl3;
-            //     const textContainer = document.getElementById('textContainer');
-            //     textContainer.textContent = description3;
-            // }
-        })
-        .catch(error => console.error('Error:', error));
-});
-
-document.getElementById('editButton').addEventListener('click', function () {
-    // window.location.href = 'edit.html'; // Redirects to the edit page
-    var data = document.getElementById('textContainer').textContent;
-
-    // Encode the data to be included in the URL
-    var encodedData = encodeURIComponent(data);
-
-    // Redirect to the second page with data as a parameter
-    window.location.href = "edit.html?data=" + encodedData;
-});
-
-document.getElementById('scheduleButton').addEventListener('click', function () {
-    const dateControl = document.querySelector('input[type="date"]');
-    console.log(dateControl.value)
-    if (dateControl.value == "2018-07-22") {
-        alert('Enter a schedule date first before approving')
-        document.getElementById("platformChoice").style.display = "none";
-        document.getElementById('contentPreview').style.display = 'block';
-    }
-    else {
-        document.getElementById('contentPreview').style.display = 'none';
-        document.getElementById('platformChoice').style.display = 'block'; // Show platform choices
-    }
-});
-
-document.getElementById('approveButton').addEventListener('click', function () {
-    const dateControl = document.querySelector('input[type="date"]');
-    console.log(dateControl.value)
-    var checkboxes = document.querySelectorAll('#checkboxes input[type="checkbox"]');
-    var checkedCheckboxes = [];
-
-    checkboxes.forEach(function (checkbox) {
-        if (checkbox.checked) {
-            checkedCheckboxes.push(checkbox.id);
-        }
-    });
-    if (checkedCheckboxes.length == 0) {
-        alert('Error: Select atleast 1 platform.')
-    }
-    else {
-        var val = 0;
-        if (checkedCheckboxes.length == 2) {
-            if (checkedCheckboxes[0] === "Insta" && checkedCheckboxes[1] == "Fb")
-                val = 4;
-            else if (checkedCheckboxes[0] === "Insta" && checkedCheckboxes[1] == "Story")
-                val = 5;
-        }
-        else if (checkedCheckboxes.length == 1) {
-            if (checkedCheckboxes[0] === "Insta")
-                val = 1;
-            else if (checkedCheckboxes[0] === "Fb")
-                val = 2;
-            else
-                val = 3
-        }
-        console.log(checkedCheckboxes)
-        // Insta == 1 ; Facebook == 2 ; Both Fb and Insta == 4; Story only = 3; Story and Insta Post = 5;
-        const button1 = document.getElementById('products');
-        const button2 = document.getElementById('craft-stories');
-        const button3 = document.getElementById('blogs');
-        const isButton1Active = button1.classList.contains('active');
-        const isButton2Active = button2.classList.contains('active');
-        const isButton3Active = button3.classList.contains('active');
-        // document.getElementById('contentPreview').style.display = 'block';
-        // document.getElementById('platformChoice').style.display = 'none'; // Show platform choices
-
-        fetch('https://flask-heroku-server-3.onrender.com/get-image-url')
-            .then(response => {
-                console.log('Response:', response);
-                return response.json();
-            })
-            .then(data => {
-                console.log(data);
-                url1 = data.url1;
-                url2 = data.url2;
-                url3 = data.url3;
-                var url_1;
-                if (isButton2Active) {
-                    url_1 = url2;
-                }
-                if (isButton1Active) {
-                    url_1 = url1;
-                }
-                if (isButton3Active) {
-                    url_1 = url3;
-                }
-
-                const json = {
-                    url: url_1,
-                    approved: val,
-                    date: dateControl.value,
-                };
-
-                console.log(json);
-
-                return fetch("https://flask-heroku-server-3.onrender.com/send-approval", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(json),
-                });
-            })
-            .then(response => {
-                if (response.ok) {
-                    console.log('Data successfully sent to /send-approval');
-                    // Handle success as needed
-                } else {
-                    console.error('Failed to send data to /send-approval');
-                    // Handle failure as needed
-                }
-            })
-            .catch(error => console.error('Error:', error))
-            .finally(() => {
-                setTimeout(function () {
-                    location.reload();
-                }, 100); // Reload the page after 100 milliseconds
-            });
-    }
-    // setTimeout(function() {
-    //     location.reload();
-    //   }, 100);
-});
-
-function schedulePost() {
-    // Prompt the user to enter the scheduled date
-    const scheduledDate = document.getElementById("scheduledDate").value;
-
-    // Store the selected date in a variable or perform further actions
-    console.log("Scheduled Date:", scheduledDate);
-}
-
-function postToPlatform(platform) {
-    alert(`Post approved and will be uploaded to ${platform}.`);
-    document.getElementById("platformChoice").style.display = "none";
-    document.getElementById('contentPreview').style.display = 'block';
-}
-
-document.getElementById('rejectButton').addEventListener('click', function () {
-    console.log('working');
-    alert('Content rejected!'); // Placeholder for rejection logic
-
-    // Additional logic can be added for handling rejection actions or feedback
-    const button1 = document.getElementById('products');
-    const button2 = document.getElementById('craft-stories');
-    const button3 = document.getElementById('blogs');
-    const isButton1Active = button1.classList.contains('active');
-    const isButton2Active = button2.classList.contains('active');
-    const isButton3Active = button3.classList.contains('active');
-    fetch('https://flask-heroku-server-3.onrender.com/get-image-url')
-        .then(response => {
-            console.log('Response:', response);
-            return response.json();
-        })
-        .then(data => {
-            url1 = data.url1;
-            url2 = data.url2;
-            url3 = data.url3;
-            var url_1;
-            if (isButton2Active) {
-                url_1 = url2;
-            }
-            if (isButton1Active) {
-                url_1 = url1;
-            }
-            if (isButton3Active) {
-                url_1 = url3;
-            }
-
-            const json = {
-                url: url_1,
-                approved: -1,
-                date: "2021-02-21",
-            };
-
-            console.log(json);
-
-            return fetch("https://flask-heroku-server-3.onrender.com/send-approval", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(json),
-            });
-        })
-        .then(response => {
-            if (response.ok) {
-                console.log('Data successfully sent to /send-approval');
-                // Handle success as needed
-            } else {
-                console.error('Failed to send data to /send-approval');
-                // Handle failure as needed
-            }
-        })
-        .catch(error => console.error('Error:', error));
-});
-
-const buttons = document.querySelectorAll('.btn');
-const body = document.body;
-
-function buttonClickHandler() {
-    // Call your specific function here
-    console.log('Button clicked:', this.id);
-
-    // Make all buttons inactive
-    buttons.forEach(btn => btn.classList.remove('active'));
-
-    // Make the clicked button active
-    this.classList.add('active');
-
-    // Reset background color for the body
-    body.classList.remove('blue-bg', 'red-bg', 'yellow-bg');
-
-    // Set background color based on the clicked button
-    switch (this.id) {
-        case 'blogs':
-            body.classList.add('blue-bg');
-            break;
-        case 'craft-stories':
-            body.classList.add('red-bg');
-            break;
-        case 'products':
-            body.classList.add('yellow-bg');
-            break;
-        default:
-            break;
-    }
-
-    const button1 = document.getElementById('products');
-    const button2 = document.getElementById('craft-stories');
-    const button3 = document.getElementById('blogs');
-    const isButton1Active = button1.classList.contains('active');
-    const isButton2Active = button2.classList.contains('active');
-    const isButton3Active = button3.classList.contains('active');
-
-    if (isButton2Active) {
-        document.getElementById('previewImage').src = imageUrl2;
-        const textContainer = document.getElementById('textContainer');
-        textContainer.textContent = description2;
-    }
-
-
-    if (isButton1Active) {
-        document.getElementById('previewImage').src = imageUrl1;
-        const textContainer = document.getElementById('textContainer');
-        textContainer.textContent = description1;
-    }
-    if (isButton3Active) {
-        document.getElementById('previewImage').src = imageUrl3;
-        const textContainer = document.getElementById('textContainer');
-        textContainer.textContent = description3;
-    }
-}
-
-buttons.forEach(button => {
-    button.addEventListener('click', buttonClickHandler);
-});
-
-// Initially call the buttonClickHandler for the default active button
-buttonClickHandler.call(document.querySelector('.active'));
-
+from flask import Flask, jsonify
+from flask import Flask, request
+from pymongo import MongoClient
+from datetime import datetime
+from flask_cors import CORS
+ 
+app = Flask(__name__)
+CORS(app)
+ 
+# MongoDB connection URI
+uri = "mongodb+srv://tanaygad:192837465@dass.tqizd9y.mongodb.net/"
+client = MongoClient(uri)
+ 
+@app.route('/')
+def start():
+    return "This is our webserver"
+# Define a route to handle the AJAX request
+@app.route('/get-image-url')
+def get_image_url():
+    try:
+        database = client['Initial_database']
+        collection = database['items']
+        document1 = collection.find_one(
+            {'approved': 0, 'recommended': 0, 'type': "product"})
+        document2 = collection.find_one(
+            {'approved': 0, 'recommended': 0, 'type': "craft"})
+        document3 = collection.find_one(
+            {'approved': 0, 'recommended': 0, 'type': "blog"})
+        print(document1)
+        if document1:
+            # Assuming the image URL is stored in a field called 'image-url'
+            image_url1 = document1['image-url']
+            description1 = document1['caption']
+            url1 = document1['url-link']
+            image_url2 = ""
+            image_url3 = ""
+            url2 = ""
+            url3 = ""
+            description2 = ""
+            description3 = ""
+            if (document2):
+                # Assuming the image URL is stored in a field called 'image-url'
+                image_url2 = document2['image-url']
+                description2 = document2['caption']
+                url2 = document2['url-link']
+            if (document3):
+                # Assuming the image URL is stored in a field called 'image-url'
+                image_url3 = document3['image-url']
+                description3 = document3['caption']
+                url3 = document3['url-link']
+            # Send the image URL as JSON
+            return jsonify(image_url1=image_url1, description1=description1, url1=url1, image_url2=image_url2, description2=description2, url2=url2, image_url3=image_url3, description3=description3, url3=url3)
+            # 1-product 2-craft 3-blog
+        else:
+            return jsonify(error='Document not found'), 404
+    except Exception as e:
+        return jsonify(error=str(e)), 500
+ 
+ 
+@app.route('/send-edited-response', methods=['POST', 'GET'])
+def receive_edited_content():
+    try:
+        data = request.json
+        url = data['url']
+        updated_data = data['updateData']
+ 
+        # Process the received data as needed
+        print("Received URL:", url)
+        print("Updated Data:", updated_data)
+ 
+        # Here you can perform further processing or return a response
+        # For example, return a success message
+        database = client['Initial_database']
+        collection = database['items']
+        document = collection.find_one({'url-link': url})
+        if document:
+            # Update the description
+            collection.update_one(                     #change this to update many
+                {'url-link': url},
+                {'$set': {'caption': updated_data}}
+            )
+ 
+        return {'message': 'Data received successfully'}, 200
+    except Exception as e:
+        # Handle any exceptions that occur during processing
+        print("Error:", e)
+        return {'error': 'An error occurred'}, 500
+ 
+ 
+@app.route('/post')
+def get_post_ready():
+    try:
+        database = client['Initial_database']
+        collection = database['items']
+        today_date = datetime.today().strftime('%Y-%m-%d')
+        document = collection.find_one(
+            {'approved': {'$in': [1,2,3,4,5]}, 'recommended': 0, 'date_to_post': today_date})
+        if document:
+            # Assuming the image URL is stored in a field called 'image-url'
+            image_url = document['image-url']
+            description = document['caption']
+            height = document['img-height']
+            width = document['img-width']
+            url = document['url-link']
+            platform = document['approved']
+            collection.update_many(
+                {'url-link': url},
+                {'$set': {'recommended': 1}}
+            )
+            # Send the image URL as JSON
+            return jsonify(image_url=image_url, description=description, width=width, height=height,platform=platform)
+        else:
+            return jsonify(error='Document not found'), 404
+    except Exception as e:
+        return jsonify(error=str(e)), 500
+ 
+ 
+@app.route('/send-approval', methods=['POST', 'GET'])
+def receive_approval():
+    try:
+        data = request.json
+        url = data['url']
+        approval = data['approved']
+        date = data['date']
+        time=data['time']
+        print(time)
+        # Process the received data as needed
+ 
+        # Here you can perform further processing or return a response
+        # For example, return a success message
+        database = client['Initial_database']
+        collection = database['items']
+        document = collection.find_one({'url-link': url})
+        if document:
+            print("Received URL:", url)
+            print("approved:", approval)
+            print("date:", date)
+        # Update the description
+        collection.update_many(
+        {'url-link': url},
+        {'$set': {'approved': approval, 'date_to_post': date, 'time':time}}
+        )
+        return {'message': 'Data received successfully'}, 200
+    except Exception as e:
+        # Handle any exceptions that occur during processing
+        print("Error:", e)
+        return {'error': 'An error occurred'}, 500
+ 
+ 
+if __name__ == '__main__':
+    app.run(debug=True)  # Run the Flask app in debug mode
