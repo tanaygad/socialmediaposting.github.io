@@ -1,0 +1,64 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    padding: 30px; /* Increase padding for more space inside the form */
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    max-width: 800px; /* Increase maximum width of the form */
+    width: 100%; /* Make it responsive */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+label {
+    margin-bottom: 15px; /* Increase margin for more separation */
+}
+
+input {
+    width: calc(100% - 40px); /* Full width - padding */
+    height: 160px; /* Increase height for a taller text box */
+    margin-bottom: 15px;
+    padding: 15px; /* Set padding directly, not included in height calculation */
+    box-sizing: content-box; /* Exclude padding from width and height calculations */
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    overflow-wrap: break-word; /* Allow words to break onto the next line */
+}
+
+
+
+button {
+    background-color: #30638E;
+    color: #FFFFFF;
+    border: none;
+    padding: 12px 25px; /* Increase padding for a larger button */
+    cursor: pointer;
+    font-size: 18px; /* Increase font size for better readability */
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+    width: auto; /* Auto width based on content */
+}
+
+@media (max-width: 768px) {
+    input, button {
+        width: calc(100% - 40px); /* Responsive width */
+    }
+    form {
+        padding: 20px; /* Adjusted padding for smaller screens */
+    }
+}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Preview and Approval</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Delius&family=Klee+One&family=Salsa&display=swap" rel="stylesheet">
+
+</head>
+
+<body class="klee-one-regular">
+    <div id="loader-wrapper">
+        <div aria-label="Orange and tan hamster running in a metal wheel" role="img" class="wheel-and-hamster">
+            <div class="wheel"></div>
+            <div class="hamster">
+                <div class="hamster__body">
+                    <div class="hamster__head">
+                        <div class="hamster__ear"></div>
+                        <div class="hamster__eye"></div>
+                        <div class="hamster__nose"></div>
+                    </div>
+                    <div class="hamster__limb hamster__limb--fr"></div>
+                    <div class="hamster__limb hamster__limb--fl"></div>
+                    <div class="hamster__limb hamster__limb--br"></div>
+                    <div class="hamster__limb hamster__limb--bl"></div>
+                    <div class="hamster__tail"></div>
+                </div>
+            </div>
+            <div class="spoke"></div>
+        </div>
+    </div>
+    
+    <header>
+        <div class="menu-icon" onclick="toggleMenu()">☰</div> <!-- Menu Icon stays outside and above the navbar -->
+    </header>
+    <div class="navbar" id="navbar">
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="howToUse.html">How To Use</a></li>
+                <li><a href="view.html">View Schedule</a></li>
+            </ul>
+        </nav>
+    </div>
+
+
+    <main>
+
+        <h1>Schedule, Edit, Post Your Social Media Content With Us</h1>
+
+        
+        <section id="contentPreview" class="card" class="salsa-regular">
+            <div id="imageContainer">
+                <img id="previewImage" src="" alt="Preview Image">
+            </div>
+            <div id="textContainer" style="color: black;font-size: 20px;background-color: bisque;width:480px;margin-top: 10px; padding:10px;text-align: justify;">
+                <!-- <textarea id="textContent" placeholder=""></textarea> -->
+                
+            </div>
+            <div class="Content_type">
+                <button id="craft-stories" class="btn">Craft Stories</button>
+                <button id="blogs" class="btn">Blogs</button>
+                <button id="products" class="btn active">Products</button>   <!--initially Product's button class is active -->
+            </div>
+    
+            <div class="buttons-container">
+                <button id="editButton">Edit</button>
+                <button id="scheduleButton">Schedule</button>
+                <button id="rejectButton">Reject</button>
+            </div>
+            <div id="Schedule_container">
+                <label for="start">Schedule:</label>
+                <input type="date" id="start" name="trip-start" value="2018-07-22"/>
+            </div>
+        </section>
+        <section id="platformChoice" style="display:none;" class="salsa-regular">
+            <div id="checkboxes">
+                <input type="checkbox" id="Insta" name="checkbox1">
+                <label for="checkbox1">Post on  Instagram</label><br>
+                <input type="checkbox" id="Fb" name="checkbox2">
+                <label for="checkbox2">Post on Facebook</label><br>
+                <input type="checkbox" id="Story" name="checkbox3">
+                <label for="checkbox3">Add to Story</label><br>
+            </div>
+            <!-- <button onclick="postToPlatform('Instagram')">Post to Instagram</button>
+            <button onclick="postToPlatform('Facebook')">Post to Facebook</button> -->
+            <div class="Approval">
+            <button id="approveButton">Approve</button>
+            </div>
+        </section>
+    </main>
+
+    <script src='app.js'></script>
+</body>
+
+</html>
