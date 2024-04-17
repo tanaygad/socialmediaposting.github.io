@@ -145,6 +145,7 @@ document.getElementById('approveButton').addEventListener('click', function () {
             else
                 val = 3
         }
+        else val = 6;
         console.log(checkedCheckboxes)
         // Insta == 1 ; Facebook == 2 ; Both Fb and Insta == 4; Story only = 3; Story and Insta Post = 5;
         const button1 = document.getElementById('products');
